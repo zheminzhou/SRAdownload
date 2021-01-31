@@ -1,13 +1,12 @@
 import os, sys
 from setuptools import setup, find_packages
-from SRAdownload import __VERSION__
 
 with open('README.rst', encoding='utf-8') as f:
     long_description = f.read()
 
 setup(
     name='SRAdownload',
-    version=__VERSION__,
+    version=1.6,
     #scripts=['PEPPA.py'] ,
     author="Zhemin Zhou",
     author_email="zhemin.zhou@warwick.ac.uk",
