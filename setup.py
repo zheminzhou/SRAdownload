@@ -6,7 +6,7 @@ with open('README.rst', encoding='utf-8') as f:
 
 setup(
     name='SRAdownload',
-    version=2.4,
+    version=2.6,
     #scripts=['PEPPA.py'] ,
     author="Zhemin Zhou",
     author_email="zhemin.zhou@warwick.ac.uk",
