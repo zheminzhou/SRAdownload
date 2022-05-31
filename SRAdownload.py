@@ -69,7 +69,11 @@ def save_read(run_accession, folder, sources, maximum_size=None) :
             try :
                 cmd = prefetch_cmd.format(prefetch=prefetch, acc = run_accession)
                 output = subprocess.Popen(cmd.split(), cwd=route, stdout=subprocess.PIPE).communicate()
-                n_base = sum([ int(line.strip().split('\t')[2][:-1].replace(',', '')) for line in output[0].split('\n') if len(line) > 1])
+                try :
+                    n_base = sum([ int(line.strip().split('\t')[2][:-1].replace(',', '')) for line in output[0].split('\n') if len(line) > 1])
+                except :
+                    sys.stderr.write('prefetch failed. try to download anyway\n')
+                    n_base = 1
                 if maximum_size and n_base > maximum_size :
                     sys.stderr.write('SRA file for {0} is too large. Give up\n'.format(run_accession))
                     continue
