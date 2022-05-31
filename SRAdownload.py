@@ -8,11 +8,11 @@ except :
     from urllib2 import urlopen
 
 home_dir = os.path.dirname(os.path.realpath(__file__))
-fasterq_dump = os.path.join(home_dir, 'sratoolkit.2.9.6-1-ubuntu64/bin/fasterq-dump')
+fasterq_dump = os.path.join(home_dir, 'sratoolkit.3.0.0-ubuntu64/bin/fasterq-dump')
 fasterq_cmd = '{fasterq_dump} {acc} -f --split-3 -O {route}'
-prefetch = os.path.join(home_dir, 'sratoolkit.2.9.6-1-ubuntu64/bin/prefetch')
+prefetch = os.path.join(home_dir, 'sratoolkit.3.0.0-ubuntu64/bin/prefetch')
 prefetch_cmd = '{prefetch} -s {acc}'
-ebi_webpage = 'http://www.ebi.ac.uk/ena/data/warehouse/filereport?accession={acc}&result=read_run&fields=base_count,fastq_ftp,submitted_ftp'
+ebi_webpage = 'https://www.ebi.ac.uk/ena/portal/api/filereport?accession={acc}&result=read_run&fields=base_count,fastq_ftp,submitted_ftp'
 
 @click.command(context_settings=dict(help_option_names=['-h', '--help']))
 @click.argument('run', nargs=-1)
@@ -45,15 +45,15 @@ def get_sratoolkit() :
         p.communicate()
         assert p.returncode == 0, ''
     except Exception as e:
-        sys.stderr.write('sratoolkit.2.9.6-1 is required for the module. Downloading from the NCBI website...\n')
-        url = 'https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/2.9.6-1/sratoolkit.2.9.6-1-ubuntu64.tar.gz'
-        tar_file = os.path.join(home_dir, 'sratoolkit.2.9.6-1-ubuntu64.tar.gz')
+        sys.stderr.write('sratoolkit.3.0.0-ubuntu64 is required for the module. Downloading from the NCBI website...\n')
+        url = 'https://ftp-trace.ncbi.nlm.nih.gov/sra/sdk/3.0.0/sratoolkit.3.0.0-ubuntu64.tar.gz'
+        tar_file = os.path.join(home_dir, 'sratoolkit.3.0.0-ubuntu64.tar.gz')
         download_file(url, tar_file)
         subprocess.Popen('tar -vxzf {0}'.format(tar_file).split(), stdout=subprocess.PIPE, stderr=subprocess.PIPE, cwd=home_dir).communicate()
         p = subprocess.Popen(fasterq_dump, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         p.communicate()
         assert p.returncode == 0, ''
-        sys.stderr.write('sratoolkit.2.9.6-1 has been downloaded. You will not see this the next time.\n')
+        sys.stderr.write('sratoolkit.3.0.0 has been downloaded. You will not see this the next time.\n')
     return
 
 def save_read(run_accession, folder, sources, maximum_size=None) :
